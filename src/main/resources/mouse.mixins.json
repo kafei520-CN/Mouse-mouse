@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "cn.kafei.mouse.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "GameRendererMixin",
+    "KeyboardHandlerMixin",
+    "MouseHandlerAccessor",
+    "MouseHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
