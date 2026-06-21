@@ -153,14 +153,6 @@ public class DeviceSelectScreen extends Screen {
         @Override protected void applyValue() { setter.accept(fromSlider(value)); }
     }
 
-    private String getDeviceName(int id) {
-        if (id < 0) return null;
-        for (String line : lines) {
-            if (parseId(line) == id) return parseDisplayText(line);
-        }
-        return null;
-    }
-
     // 从行文本解析设备 ID，格式: "Device 3 [Mouse]: ..."
     private static final Pattern ID_PAT = Pattern.compile("Device\\s+(\\d+)");
     private static final Pattern DISPLAY_PAT = Pattern.compile("^Device\\s+\\d+\\s+(\\[[^\\]]+\\]:\\s*.+)$");
