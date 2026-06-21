@@ -4,7 +4,10 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "GameRendererMixin",
+    "InputConstantsMixin",
     "KeyboardHandlerMixin",
+    "KeyMappingMixin",
+    "MinecraftIsWindowActiveMixin",
     "MouseHandlerAccessor",
     "MouseHandlerMixin"
   ],

@@ -14,6 +14,8 @@ public class IPCClient {
     private static final IPCClient INSTANCE = new IPCClient();
     private final List<Connection> connections = new CopyOnWriteArrayList<>();
 
+    public static volatile int lastActiveDeviceId = -1;
+
     public static IPCClient getInstance() { return INSTANCE; }
 
     public synchronized void connect(List<Integer> deviceIds) {
@@ -71,6 +73,7 @@ public class IPCClient {
         private void receiveLoop(DataInputStream in) throws IOException {
             while (running) {
                 int type = in.readUnsignedByte();
+                IPCClient.lastActiveDeviceId = deviceId;
                 if (type == 0x01) {
                     int vk = in.readUnsignedByte();
                     int state    = in.readUnsignedByte();

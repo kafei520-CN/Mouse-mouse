@@ -1,0 +1,21 @@
+{
+  "mouse.configuration.title": "鼠标配置",
+  "mouse.configuration.section.mouse.common.toml": "鼠标配置",
+  "mouse.configuration.section.mouse.common.toml.title": "鼠标配置",
+  "mouse.configuration.items": "物品列表",
+  "mouse.configuration.logDirtBlock": "记录泥土方块",
+  "mouse.configuration.magicNumberIntroduction": "魔法数字文本",
+  "mouse.configuration.magicNumber": "魔法数字",
+  "mouse.screen.title": "鼠标设备选择",
+  "mouse.screen.refresh": "刷新",
+  "mouse.screen.save": "保存",
+  "mouse.screen.cancel": "取消",
+  "mouse.screen.splitter_failed": "Raw Input 分流器启动失败。",
+  "mouse.screen.no_devices": "尚未检测到 Raw Input 设备。",
+  "mouse.screen.hint": "移动鼠标或按下任意键，然后刷新。",
+  "mouse.screen.look_sens": "视角灵敏度",
+  "mouse.screen.screen_sens": "界面灵敏度",
+  "mouse.screen.active_device": "当前输入:",
+  "mouse.screen.active_device_none": "无",
+  "mouse.chat.splitter_failed": "[DualMouse] Raw Input 分流器启动失败，请查看 latest.log。"
+}

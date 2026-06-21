@@ -21,8 +21,7 @@ public class ClientEventHandler {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
 
-        mc.player.sendSystemMessage(Component.literal(
-            "[DualMouse] Raw Input splitter failed to start. Check latest.log for details."));
+        mc.player.sendSystemMessage(Component.translatable("mouse.chat.splitter_failed"));
     }
 
     @SubscribeEvent

@@ -5,5 +5,17 @@
   "mouse.configuration.items": "Item List",
   "mouse.configuration.logDirtBlock": "Log Dirt Block",
   "mouse.configuration.magicNumberIntroduction": "Magic Number Text",
-  "mouse.configuration.magicNumber": "Magic Number"
+  "mouse.configuration.magicNumber": "Magic Number",
+  "mouse.screen.title": "Mouse Device Selection",
+  "mouse.screen.refresh": "Refresh",
+  "mouse.screen.save": "Save",
+  "mouse.screen.cancel": "Cancel",
+  "mouse.screen.splitter_failed": "Raw Input splitter failed to start.",
+  "mouse.screen.no_devices": "No Raw Input devices found yet.",
+  "mouse.screen.hint": "Move a mouse or press a key, then refresh.",
+  "mouse.screen.look_sens": "Look Sens",
+  "mouse.screen.screen_sens": "Screen Sens",
+  "mouse.screen.active_device": "Active: ",
+  "mouse.screen.active_device_none": "None",
+  "mouse.chat.splitter_failed": "[DualMouse] Raw Input splitter failed to start. Check latest.log for details."
 }

@@ -109,7 +109,7 @@ public final class VirtualMouseService {
             || ScreenInteractionHelper.isHoveringInteractable(screen, previousGuiX, previousGuiY);
         double targetSpeedMultiplier = hoveringInteractable ? HOVER_SPEED_MULTIPLIER : 1.0D;
         currentSpeedMultiplier = blendSpeedMultiplier(currentSpeedMultiplier, targetSpeedMultiplier);
-        double cursorSpeed = getCursorSpeed(mc) * currentSpeedMultiplier;
+        double cursorSpeed = getCursorSpeed(mc) * currentSpeedMultiplier * WorldMouseService.screenSensitivity;
 
         screenCursorX = clamp(screenCursorX + dx * cursorSpeed, 0.0, maxScreenX(mc));
         screenCursorY = clamp(screenCursorY + dy * cursorSpeed, 0.0, maxScreenY(mc));
@@ -236,8 +236,7 @@ public final class VirtualMouseService {
     }
 
     private static double getCursorSpeed(Minecraft mc) {
-        double guiScale = Math.max(mc.getWindow().getGuiScale(), 1.0D);
-        return BASE_CURSOR_SPEED * guiScale;
+        return BASE_CURSOR_SPEED * Math.max(mc.getWindow().getGuiScale(), 1.0);
     }
 
     private static double clamp(double value, double min, double max) {
