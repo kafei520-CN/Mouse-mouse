@@ -8,13 +8,11 @@ import org.lwjgl.glfw.GLFW;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class IPCClient {
     private static final IPCClient INSTANCE = new IPCClient();
     private final List<Connection> connections = new CopyOnWriteArrayList<>();
-    private static final Map<Integer, Integer> deviceHeld = new ConcurrentHashMap<>();
 
     public static IPCClient getInstance() { return INSTANCE; }
 
@@ -84,7 +82,7 @@ public class IPCClient {
                     short rolling    = readLittleShort(in);
                     int   dx         = readLittleInt(in);
                     int   dy         = readLittleInt(in);
-                    handleMouse(deviceId, mouseState, flags, rolling, dx, dy);
+                    handleMouse(mouseState, flags, rolling, dx, dy);
                 }
             }
         }
@@ -121,16 +119,7 @@ public class IPCClient {
         KeyboardInjectionService.handleKey(windowsVk, pressed);
     }
 
-    private static void handleMouse(int deviceId, short state, short flags, short rolling, int dx, int dy) {
-        int held = deviceHeld.getOrDefault(deviceId, 0);
-        if ((state & 0x0001) != 0) held |= 1; else if ((state & 0x0002) != 0) held &= ~1;
-        if ((state & 0x0004) != 0) held |= 2; else if ((state & 0x0008) != 0) held &= ~2;
-        if ((state & 0x0010) != 0) held |= 4; else if ((state & 0x0020) != 0) held &= ~4;
-        deviceHeld.put(deviceId, held);
-        int merged = 0;
-        for (int h : deviceHeld.values()) merged |= h;
-        final int mergedFinal = merged;
-
+    private static void handleMouse(short state, short flags, short rolling, int dx, int dy) {
         Minecraft.getInstance().execute(() -> {
             Minecraft mc = Minecraft.getInstance();
             if (!WindowFocusService.shouldAcceptRoutedInput(mc)) {
@@ -147,9 +136,9 @@ public class IPCClient {
             if (routedInputMode.isWorld() && (flags & 0x0001) == 0) {
                 WorldMouseService.handleRelativeLook(mc, dx, dy);
             }
-            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT,  (state & 0x0001) != 0, (state & 0x0002) != 0 && (mergedFinal & 1) == 0);
-            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_RIGHT, (state & 0x0004) != 0, (state & 0x0008) != 0 && (mergedFinal & 2) == 0);
-            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE,(state & 0x0010) != 0, (state & 0x0020) != 0 && (mergedFinal & 4) == 0);
+            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_LEFT, (state & 0x0001) != 0, (state & 0x0002) != 0);
+            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_RIGHT, (state & 0x0004) != 0, (state & 0x0008) != 0);
+            setMouseButton(GLFW.GLFW_MOUSE_BUTTON_MIDDLE, (state & 0x0010) != 0, (state & 0x0020) != 0);
             if (routedInputMode.isWorld() && rolling != 0 && mc.player != null) {
                 int delta = rolling > 0 ? -1 : 1;
                 mc.player.getInventory().selected =
