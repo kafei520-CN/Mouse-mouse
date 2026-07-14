@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="common/src/main/resources/mouse_logo.png" width="144" alt="Mouse-mouse Logo">
+  <img src="https://raw.githubusercontent.com/kafei520-CN/Mouse-mouse/main/common/src/main/resources/mouse_logo.png" width="144" alt="Mouse-mouse Logo">
 
   <h1>Mouse-mouse</h1>
 
