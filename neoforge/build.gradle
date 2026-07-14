@@ -1,0 +1,98 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.119'
+}
+
+def commonJava = "${rootDir}/common/src/main/java"
+def commonResources = "${rootDir}/common/src/main/resources"
+
+sourceSets {
+    main {
+        java.srcDirs commonJava, 'src/main/java'
+        resources.srcDirs commonResources, 'src/main/resources'
+    }
+}
+
+version = mod_version
+group = mod_group_id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+base {
+    archivesName = mod_id
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        clientA {
+            client()
+            gameDirectory = project.file('run-instance-a')
+            systemProperty 'mouse.instance', 'a'
+            programArguments.addAll '--username', 'MouseA'
+        }
+        clientB {
+            client()
+            gameDirectory = project.file('run-instance-b')
+            systemProperty 'mouse.instance', 'b'
+            programArguments.addAll '--username', 'MouseB'
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    inputs.properties([
+        version              : mod_version,
+        minecraft_version_range: minecraft_version_range,
+        neoforge_version     : neoforge_version,
+        loader_version_range : loader_version_range,
+        mod_id               : mod_id,
+        mod_name             : mod_name,
+        mod_license          : mod_license,
+    ])
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand(
+            version              : mod_version,
+            minecraft_version_range: minecraft_version_range,
+            neoforge_version     : neoforge_version,
+            loader_version_range : loader_version_range,
+            mod_id               : mod_id,
+            mod_name             : mod_name,
+            mod_license          : mod_license
+        )
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    archiveFileName = "${mod_name}-NeoForge-${mod_version}+mc${minecraft_version}.jar"
+    destinationDirectory = rootProject.layout.buildDirectory.dir('libs')
+    from('LICENSE')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

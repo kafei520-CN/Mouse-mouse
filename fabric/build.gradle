@@ -1,0 +1,47 @@
+plugins {
+    id 'fabric-loom' version '1.17.14'
+}
+
+def commonJava = "${rootDir}/common/src/main/java"
+def commonResources = "${rootDir}/common/src/main/resources"
+
+sourceSets {
+    main {
+        java.srcDirs commonJava, 'src/main/java'
+        resources.srcDirs commonResources, 'src/main/resources'
+    }
+}
+
+version = mod_version
+group = mod_group_id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+base {
+    archivesName = mod_id
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand version: project.version
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    archiveFileName = "${mod_name}-Fabric-${mod_version}+mc${minecraft_version}.jar"
+    destinationDirectory = rootProject.layout.buildDirectory.dir('libs')
+    from('LICENSE')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "package": "cn.kafei.mouse.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractContainerScreenAccessor",
+    "GameRendererMixin",
+    "InputConstantsMixin",
+    "KeyboardHandlerMixin",
+    "KeyMappingMixin",
+    "MinecraftIsWindowActiveMixin",
+    "MouseHandlerAccessor",
+    "MouseHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

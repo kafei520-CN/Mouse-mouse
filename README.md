@@ -1,145 +1,115 @@
 <div align="center">
-  <img src="src/main/resources/mouse_logo.png" width="144" alt="Mouse-mouse Logo">
+  <img src="common/src/main/resources/mouse_logo.png" width="144" alt="Mouse-mouse Logo">
 
   <h1>Mouse-mouse</h1>
 
-  <p><strong>Minecraft 1.21.1 NeoForge 客户端输入分流模组</strong></p>
-  <p>为本地多窗口、多套键鼠协作和测试场景提供独立设备选择、虚拟光标与 Raw Input 输入路由。</p>
+  <p><strong>多实例鼠标键盘分流 · Minecraft 客户端模组</strong></p>
+  <p>让两台套键鼠在同一台 PC 上分别控制各自的 Minecraft 窗口</p>
 
   <p>
-    <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=for-the-badge">
-    <img alt="NeoForge" src="https://img.shields.io/badge/NeoForge-21.1.233-EF6F3E?style=for-the-badge">
-    <img alt="Java" src="https://img.shields.io/badge/Java-21-3A75B0?style=for-the-badge">
-    <img alt="License" src="https://img.shields.io/badge/License-GPL--3.0--only-2E3440?style=for-the-badge">
+    <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21--1.21.x-62B47A?style=for-the-badge">
+    <img alt="NeoForge" src="https://img.shields.io/badge/NeoForge-21.1.x-EF6F3E?style=for-the-badge">
+    <img alt="Fabric" src="https://img.shields.io/badge/Fabric-0.16.x-B9C4D4?style=for-the-badge">
+    <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows%20Only-0078D6?style=for-the-badge">
+    <img alt="License" src="https://img.shields.io/badge/License-GPL--3.0-2E3440?style=for-the-badge">
   </p>
 </div>
 
 ---
 
-## 概览
+## 这个模组是做什么的？
 
-Mouse-mouse 通过 Windows Raw Input 捕获真实键盘和鼠标设备数据，再将用户选中的设备输入注入到当前 Minecraft 实例中。它的目标不是替代 Minecraft 原生输入，而是在多窗口场景下把不同物理设备分配给不同实例，降低后开窗口抢占输入的问题。
+Mouse-mouse 解决一个具体问题：**两个人共用一台电脑同时玩 Minecraft**。
 
-| 能力 | 说明 |
-| --- | --- |
-| 独立设备选择 | 每个 Minecraft 实例可以选择自己的键盘和鼠标设备。 |
-| 内存态配置 | 设备选择只保存在当前实例内存中，重启后重新选择。 |
-| 虚拟光标 | 菜单界面由虚拟光标处理移动、点击、拖动和滚轮。 |
-| 输入隔离 | 选中设备通过 IPC 注入，真实鼠标不会直接影响虚拟光标。 |
-| 安全入口 | `Alt + F8` 打开设备选择界面，并临时释放原生鼠标捕获。 |
-| 设备识别 | splitter 尽量显示厂商名、产品名、VID 和 PID。 |
+通常情况下，同一台 PC 上开两个 Minecraft 窗口时，两个窗口会争抢同一套鼠标和键盘——只有"当前焦点"窗口能正常接收输入。本模组通过 Windows Raw Input 在系统层捕获多设备输入，然后把每套设备的事件定向路由到各自对应的 Minecraft 实例，让两个窗口互不干扰，各自独立运行。
 
-## 快速开始
+## 功能
 
-1. 将构建产物放入对应客户端或整合包的 `mods` 目录。
-2. 启动 Minecraft `1.21.1` NeoForge 客户端。
-3. 进入游戏或菜单后按 `Alt + F8` 打开设备选择界面。
-4. 勾选当前窗口要接管的键盘或鼠标设备。
-5. 点击 `Save`，当前实例立即启用输入隔离。
+- **独立设备选择** — 每个窗口选择自己的鼠标和键盘，互不抢占
+- **虚拟光标** — 菜单界面用虚拟光标接管点击、拖拽和滚轮，与真实鼠标隔离
+- **输入隔离** — 未被分配给当前实例的设备输入会被屏蔽，不影响游戏
+- **安全键 `Alt + F8`** — 随时打开设备选择界面，同时临时释放鼠标捕获
+- **零配置文件** — 设备选择仅保存在运行内存中，无需手动编辑任何配置
+- **多实例协作** — 两个实例共用同一个 splitter 进程，自动检测并跳过重复启动
 
-当前构建产物：
+## 安装
 
-```text
-Mouse-mouse-NeoForge-1.0.1+1.21.1.jar
+> **仅支持 Windows。** 本模组依赖 Windows Raw Input API，Linux 和 macOS 不适用。
+
+### 第一步：下载 splitter.exe
+
+从 [GitHub Releases](https://github.com/kafei520-CN/Mouse-mouse/releases/tag/exe) 下载 `splitter.exe`，放入 Minecraft 实例的 `mods/` 目录：
+
+```
+.minecraft/mods/
+├── Mouse-mouse-NeoForge-x.x.x+mcx.xx.x.jar   ← 模组本体
+└── splitter.exe                                 ← 必须手动下载
 ```
 
-## 运行环境
+> `splitter.exe` 是 Raw Input 捕获进程，模组启动时会自动运行它。若 `mods/` 中不存在该文件，模组将无法正常工作。
+
+### 第二步：安装模组
+
+1. 安装对应版本的 **NeoForge** 或 **Fabric**
+2. 将模组 `.jar` 文件放入 `mods/` 目录
+3. **（Fabric 用户）** 还需要安装 [Fabric API](https://modrinth.com/mod/fabric-api)
+4. 确认 `mods/` 目录中已有 `splitter.exe`
+5. 启动游戏，进入世界或菜单后按 `Alt + F8` 打开设备选择界面
+
+## 使用方法
+
+### 双人同机
+
+1. 启动第一个 Minecraft 实例
+2. 启动第二个 Minecraft 实例
+3. 在第一个窗口按 `Alt + F8`，选择第一套键鼠，点击 `Save`
+4. 在第二个窗口按 `Alt + F8`，选择第二套键鼠，点击 `Save`
+5. 两个窗口现在各自独立响应自己的设备
+
+### 安全键 `Alt + F8`
+
+| 场景 | 效果 |
+| --- | --- |
+| 想重新选择设备 | 打开设备选择界面 |
+| 鼠标被捕获无法移出窗口 | 临时释放鼠标，可操作其他窗口 |
+| 选错设备 | 重新进界面取消或更换 |
+
+## 兼容性
 
 | 项目 | 要求 |
 | --- | --- |
-| Minecraft | `1.21.1` |
-| Mod Loader | NeoForge `21.1.233` 或兼容版本 |
-| Java | `21` |
-| 操作系统 | Windows |
-| 模组版本 | `1.0.1` |
-| 本机端口 | `127.0.0.1:19091` |
-
-> 该模组依赖 Windows Raw Input 和随包携带的 `splitter.exe`。Linux、macOS 以及没有 Raw Input 支持的环境暂不适配。
-
-## 双窗口使用
-
-如果要让两个 Minecraft 窗口分别使用两套设备，建议按下面的顺序操作：
-
-1. 启动第一个 Minecraft 实例。
-2. 启动第二个 Minecraft 实例。
-3. 在第一个窗口按 `Alt + F8`，选择第一套键鼠。
-4. 在第二个窗口按 `Alt + F8`，选择第二套键鼠。
-5. 分别点击 `Save`，让两个实例各自建立 IPC 输入路由。
-
-设备选择不会写入磁盘。这样设计是为了避免 Raw Input 设备句柄、枚举顺序或驱动信息变化后误选旧设备，也能让两个窗口保持实例级隔离。
-
-## 安全键
-
-`Alt + F8` 是当前安全键组合。
-
-| 场景 | 作用 |
-| --- | --- |
-| 输入被隔离后 | 打开设备选择界面。 |
-| 鼠标被窗口捕获时 | 临时释放原生鼠标捕获。 |
-| 选错设备时 | 重新进入选择界面，取消或更换设备。 |
-
-## 构建
-
-普通构建：
-
-```powershell
-.\gradlew.bat jar
-```
-
-完整构建：
-
-```powershell
-.\gradlew.bat build
-```
-
-如果修改了 `splitter/splitter.cpp`，需要先重新编译 splitter：
-
-```powershell
-.\splitter\build.bat
-.\gradlew.bat jar
-```
-
-`splitter/build.bat` 会把新的 `splitter.exe` 复制到 `src/main/resources/assets/mouse/splitter.exe`，随后 Gradle 会把它打入最终 JAR。
-
-## 工作原理
-
-```text
-物理键鼠
-   |
-   v
-Windows Raw Input
-   |
-   v
-splitter.exe  -- IPC: 127.0.0.1:19091
-   |
-   v
-Minecraft Client
-   |
-   +-- 世界内输入注入
-   +-- 菜单虚拟光标路由
-```
-
-模组启动时会解压并启动随包携带的 `splitter.exe`。splitter 使用 Raw Input 枚举键鼠设备，并通过本机 IPC 向 Minecraft 客户端提供设备列表和输入数据。
-
-Minecraft 客户端声明当前实例要接管的设备后，Java 侧会把这些设备的鼠标移动、按键、滚轮和键盘事件转换为 Minecraft 可处理的输入事件。菜单界面不直接使用真实鼠标坐标，而是维护一个虚拟光标位置，减少真实鼠标移动对菜单操作的干扰。
-
-## 项目结构
-
-```text
-src/main/java/cn/kafei/mouse/       客户端输入分流、虚拟光标和 IPC 逻辑
-src/main/java/cn/kafei/mouse/mixin/ Minecraft 输入处理相关 Mixin
-src/main/resources/assets/mouse/    语言文件和 splitter.exe
-src/main/templates/                 NeoForge 模组元数据模板
-splitter/                           Windows Raw Input splitter 源码和构建脚本
-```
+| Minecraft | 1.21 – 1.21.x |
+| NeoForge | 21.1.x |
+| Fabric Loader | 0.16.x 或更高 |
+| Fabric API | 需要 |
+| Java | 21 |
+| 操作系统 | **Windows 仅限** |
+| 端口占用 | `127.0.0.1:19091`（本机，不对外） |
 
 ## 已知限制
 
-- 当前只面向 Windows 客户端。
-- 设备选择不持久化，重启后需要重新选择。
-- 某些虚拟 HID、触控板或系统设备可能出现在设备列表中，具体名称取决于驱动暴露的信息。
-- splitter 使用固定本机端口 `19091`，端口被占用时设备列表和输入分流会失败。
+- 仅支持 Windows 客户端，不支持 Linux / macOS
+- 设备选择不会持久化，每次启动后需要重新选择
+- 端口 `19091` 被其他进程占用时模组会启动失败
+- 某些虚拟 HID 或触控板设备可能出现在列表中
+- 服务端不需要安装本模组（客户端 mod）
+
+## 工作原理
+
+```
+物理键鼠 A / 键鼠 B
+        │
+        ▼
+  splitter.exe  (Windows Raw Input)
+        │ IPC: 127.0.0.1:19091
+        ▼
+  Minecraft 实例 A ←── 设备 A 的输入
+  Minecraft 实例 B ←── 设备 B 的输入
+```
+
+模组启动时运行 `splitter.exe`，它通过 Windows Raw Input 枚举物理设备并建立 IPC 通道。每个 Minecraft 实例声明要接管的设备后，Java 侧接收来自该设备的原始事件，通过 Mixin 注入到 Minecraft 输入管线，菜单操作通过维护独立的虚拟光标完成。
+
 
 ## 许可证
 
-本项目采用 GPL-3.0-only 许可证，完整条款见 [LICENSE](LICENSE)。
+GPL-3.0-only

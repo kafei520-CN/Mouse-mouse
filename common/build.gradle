@@ -1,0 +1,8 @@
+architectury {
+    common('neoforge', 'fabric')
+}
+
+dependencies {
+    // Needed for Mixin annotation processor
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+}

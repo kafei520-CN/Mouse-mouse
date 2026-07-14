@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "mouse",
+  "version": "${version}",
+  "name": "Mouse-mouse",
+  "description": "Multi-instance mouse input splitter mod",
+  "authors": ["mckafei"],
+  "license": "GPL-3.0-only",
+  "icon": "mouse_logo.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["cn.kafei.mouse.MousemouseFabric"]
+  },
+  "mixins": ["mouse.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "minecraft": ">=1.21 <1.22",
+    "fabric-api": "*",
+    "java": ">=21"
+  }
+}
