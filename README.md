@@ -7,7 +7,7 @@
   <p>Let two players share one PC, each controlling their own Minecraft window with their own devices</p>
 
   <p>
-    <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21--1.21.x-62B47A?style=for-the-badge">
+    <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=for-the-badge">
     <img alt="NeoForge" src="https://img.shields.io/badge/NeoForge-21.1.x-EF6F3E?style=for-the-badge">
     <img alt="Fabric" src="https://img.shields.io/badge/Fabric-0.16.x-B9C4D4?style=for-the-badge">
     <img alt="Platform" src="https://img.shields.io/badge/Platform-Windows%20Only-0078D6?style=for-the-badge">
@@ -42,7 +42,7 @@ Download `splitter.exe` from [GitHub Releases](https://github.com/kafei520-CN/Mo
 
 ```
 .minecraft/mods/
-├── Mouse-mouse-NeoForge-x.x.x+mcx.xx.x.jar   ← mod jar
+├── Mouse-mouse-NeoForge-x.x.x+mc1.21.1.jar   ← mod jar
 └── splitter.exe                                 ← required, download separately
 ```
 
@@ -78,7 +78,7 @@ Download `splitter.exe` from [GitHub Releases](https://github.com/kafei520-CN/Mo
 
 | | Requirement |
 | --- | --- |
-| Minecraft | 1.21 – 1.21.x |
+| Minecraft | 1.21.1 |
 | NeoForge | 21.1.x |
 | Fabric Loader | 0.16.x or later |
 | Fabric API | Required |
