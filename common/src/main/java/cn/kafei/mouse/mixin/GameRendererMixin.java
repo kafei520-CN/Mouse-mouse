@@ -20,14 +20,7 @@ public class GameRendererMixin {
         VirtualMouseService.syncRenderPosition(mc, deltaTracker.getGameTimeDeltaPartialTick(false));
     }
 
-    @Inject(
-        method = "render",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/GuiGraphics;flush()V",
-            shift = At.Shift.AFTER
-        )
-    )
+    @Inject(method = "render", at = @At("TAIL"))
     private void mouse$renderVirtualCursorOverlay(DeltaTracker deltaTracker, boolean renderWorld, CallbackInfo ci) {
         VirtualCursorOverlayRenderer.renderFrameEndCursor(Minecraft.getInstance(), deltaTracker.getGameTimeDeltaPartialTick(false));
     }

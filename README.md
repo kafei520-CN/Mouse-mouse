@@ -3,8 +3,8 @@
 
   <h1>Mouse-mouse</h1>
 
-  <p><strong>多实例鼠标键盘分流 · Minecraft 客户端模组</strong></p>
-  <p>让两台套键鼠在同一台 PC 上分别控制各自的 Minecraft 窗口</p>
+  <p><strong>Multi-instance mouse &amp; keyboard input splitter for Minecraft</strong></p>
+  <p>Let two players share one PC, each controlling their own Minecraft window with their own devices</p>
 
   <p>
     <img alt="Minecraft" src="https://img.shields.io/badge/Minecraft-1.21--1.21.x-62B47A?style=for-the-badge">
@@ -17,99 +17,98 @@
 
 ---
 
-## 这个模组是做什么的？
+## What does this mod do?
 
-Mouse-mouse 解决一个具体问题：**两个人共用一台电脑同时玩 Minecraft**。
+Mouse-mouse solves one specific problem: **two people playing Minecraft simultaneously on the same PC**.
 
-通常情况下，同一台 PC 上开两个 Minecraft 窗口时，两个窗口会争抢同一套鼠标和键盘——只有"当前焦点"窗口能正常接收输入。本模组通过 Windows Raw Input 在系统层捕获多设备输入，然后把每套设备的事件定向路由到各自对应的 Minecraft 实例，让两个窗口互不干扰，各自独立运行。
+When two Minecraft windows are open on the same machine, they compete for the same mouse and keyboard — only the focused window receives input normally. This mod captures raw input at the system level via Windows Raw Input and routes each device's events to its assigned Minecraft instance, so both windows run independently without interfering with each other.
 
-## 功能
+## Features
 
-- **独立设备选择** — 每个窗口选择自己的鼠标和键盘，互不抢占
-- **虚拟光标** — 菜单界面用虚拟光标接管点击、拖拽和滚轮，与真实鼠标隔离
-- **输入隔离** — 未被分配给当前实例的设备输入会被屏蔽，不影响游戏
-- **安全键 `Alt + F8`** — 随时打开设备选择界面，同时临时释放鼠标捕获
-- **零配置文件** — 设备选择仅保存在运行内存中，无需手动编辑任何配置
-- **多实例协作** — 两个实例共用同一个 splitter 进程，自动检测并跳过重复启动
+- **Per-instance device selection** — each window picks its own mouse and keyboard, no conflicts
+- **Virtual cursor** — menus use a software cursor for clicks, drags, and scrolling, isolated from the physical mouse
+- **Input isolation** — events from unassigned devices are blocked so they don't affect the game
+- **Safety chord `Alt + F8`** — opens the device selection screen at any time and temporarily releases mouse capture
+- **No config files** — device selection is stored only in memory; nothing is written to disk
+- **Multi-instance cooperation** — both instances share one splitter process; duplicate launches are detected and skipped automatically
 
-## 安装
+## Installation
 
-> **仅支持 Windows。** 本模组依赖 Windows Raw Input API，Linux 和 macOS 不适用。
+> **Windows only.** This mod relies on the Windows Raw Input API and does not work on Linux or macOS.
 
-### 第一步：下载 splitter.exe
+### Step 1 — Download splitter.exe
 
-从 [GitHub Releases](https://github.com/kafei520-CN/Mouse-mouse/releases/tag/exe) 下载 `splitter.exe`，放入 Minecraft 实例的 `mods/` 目录：
+Download `splitter.exe` from [GitHub Releases](https://github.com/kafei520-CN/Mouse-mouse/releases/tag/exe) and place it in your Minecraft instance's `mods/` folder:
 
 ```
 .minecraft/mods/
-├── Mouse-mouse-NeoForge-x.x.x+mcx.xx.x.jar   ← 模组本体
-└── splitter.exe                                 ← 必须手动下载
+├── Mouse-mouse-NeoForge-x.x.x+mcx.xx.x.jar   ← mod jar
+└── splitter.exe                                 ← required, download separately
 ```
 
-> `splitter.exe` 是 Raw Input 捕获进程，模组启动时会自动运行它。若 `mods/` 中不存在该文件，模组将无法正常工作。
+> `splitter.exe` is the Raw Input capture process. The mod launches it automatically on startup. If it is missing from `mods/`, the mod will not function.
 
-### 第二步：安装模组
+### Step 2 — Install the mod
 
-1. 安装对应版本的 **NeoForge** 或 **Fabric**
-2. 将模组 `.jar` 文件放入 `mods/` 目录
-3. **（Fabric 用户）** 还需要安装 [Fabric API](https://modrinth.com/mod/fabric-api)
-4. 确认 `mods/` 目录中已有 `splitter.exe`
-5. 启动游戏，进入世界或菜单后按 `Alt + F8` 打开设备选择界面
+1. Install **NeoForge** or **Fabric** for your Minecraft version
+2. Drop the mod `.jar` into your `mods/` folder
+3. **(Fabric only)** Also install [Fabric API](https://modrinth.com/mod/fabric-api)
+4. Confirm `splitter.exe` is present in `mods/`
+5. Launch the game, then press `Alt + F8` in-game or on a screen to open the device selection UI
 
-## 使用方法
+## Usage
 
-### 双人同机
+### Two players, one PC
 
-1. 启动第一个 Minecraft 实例
-2. 启动第二个 Minecraft 实例
-3. 在第一个窗口按 `Alt + F8`，选择第一套键鼠，点击 `Save`
-4. 在第二个窗口按 `Alt + F8`，选择第二套键鼠，点击 `Save`
-5. 两个窗口现在各自独立响应自己的设备
+1. Start the first Minecraft instance
+2. Start the second Minecraft instance
+3. In the first window, press `Alt + F8`, select the first set of devices, click **Save**
+4. In the second window, press `Alt + F8`, select the second set of devices, click **Save**
+5. Both windows now respond independently to their assigned devices
 
-### 安全键 `Alt + F8`
+### Safety chord `Alt + F8`
 
-| 场景 | 效果 |
+| Situation | Effect |
 | --- | --- |
-| 想重新选择设备 | 打开设备选择界面 |
-| 鼠标被捕获无法移出窗口 | 临时释放鼠标，可操作其他窗口 |
-| 选错设备 | 重新进界面取消或更换 |
+| Want to change devices | Opens the device selection screen |
+| Mouse is captured and can't leave the window | Temporarily releases mouse capture |
+| Wrong device selected | Re-enter the screen to reassign or deselect |
 
-## 兼容性
+## Compatibility
 
-| 项目 | 要求 |
+| | Requirement |
 | --- | --- |
 | Minecraft | 1.21 – 1.21.x |
 | NeoForge | 21.1.x |
-| Fabric Loader | 0.16.x 或更高 |
-| Fabric API | 需要 |
+| Fabric Loader | 0.16.x or later |
+| Fabric API | Required |
 | Java | 21 |
-| 操作系统 | **Windows 仅限** |
-| 端口占用 | `127.0.0.1:19091`（本机，不对外） |
+| OS | **Windows only** |
+| Local port | `127.0.0.1:19091` (localhost, not exposed externally) |
 
-## 已知限制
+## Known Limitations
 
-- 仅支持 Windows 客户端，不支持 Linux / macOS
-- 设备选择不会持久化，每次启动后需要重新选择
-- 端口 `19091` 被其他进程占用时模组会启动失败
-- 某些虚拟 HID 或触控板设备可能出现在列表中
-- 服务端不需要安装本模组（客户端 mod）
+- Windows clients only — Linux and macOS are not supported
+- Device selection is not persisted; you must re-select after every launch
+- If port `19091` is already in use by another process, the mod will fail to start
+- Some virtual HID devices or touchpads may appear in the device list
+- This is a client-side mod; the server does not need it installed
 
-## 工作原理
+## How It Works
 
 ```
-物理键鼠 A / 键鼠 B
+Physical devices A / B
         │
         ▼
   splitter.exe  (Windows Raw Input)
         │ IPC: 127.0.0.1:19091
         ▼
-  Minecraft 实例 A ←── 设备 A 的输入
-  Minecraft 实例 B ←── 设备 B 的输入
+  Minecraft instance A ←── input from device A
+  Minecraft instance B ←── input from device B
 ```
 
-模组启动时运行 `splitter.exe`，它通过 Windows Raw Input 枚举物理设备并建立 IPC 通道。每个 Minecraft 实例声明要接管的设备后，Java 侧接收来自该设备的原始事件，通过 Mixin 注入到 Minecraft 输入管线，菜单操作通过维护独立的虚拟光标完成。
+On startup, the mod launches `splitter.exe`, which enumerates physical input devices via Windows Raw Input and opens an IPC channel. Each Minecraft instance claims the devices it wants; the Java side then receives raw events from those devices and injects them into Minecraft's input pipeline via Mixin. Menu interaction is handled through a per-instance virtual cursor, so the physical mouse position does not directly affect GUI state.
 
+## License
 
-## 许可证
-
-GPL-3.0-only
+GPL-3.0-only — see [LICENSE](LICENSE) for the full terms.
